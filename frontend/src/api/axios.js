@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://your-backend-project.vercel.app',
 });
 
 // Attach JWT token to every request automatically
@@ -14,3 +14,4 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
+S
