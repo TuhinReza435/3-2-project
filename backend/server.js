@@ -19,19 +19,23 @@ app.get('/', (req, res) => {
   res.send('MERN Backend API is running...');
 });
 
-// Database connection
+// Database Connection
 const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB successfully.');
-    // Init Escalation Job
+
     runEscalationJob();
-    // Start Server
-    app.listen(PORT, () => {
-      console.log(`Server is running on port: ${PORT}`);
-    });
   })
   .catch((err) => {
     console.error('Error connecting to MongoDB:', err.message);
   });
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT}`);
+});
+
+// Vercel-এর জন্য মাস্ট
+module.exports = app;

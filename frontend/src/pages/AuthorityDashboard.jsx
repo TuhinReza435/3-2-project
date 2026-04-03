@@ -9,8 +9,7 @@ const AuthorityDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [fetching, setFetching] = useState(true);
   const [loading, setLoading] = useState({});
-  const [comments, setComments] = useState({});
-
+  const [comments, setComments] = useState({});   
   const fetchComplaints = async () => {
     try {
       const { data } = await api.get('/complaints/authority');

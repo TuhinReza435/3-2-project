@@ -2,13 +2,12 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true }, // Gmail
+  email: { type: String, required: true, unique: true }, 
   password: { type: String, required: true },
   
-  // Role separates students from authorities
+
   role: { type: String, enum: ['student', 'authority'], default: 'student' },
 
-  // --- STUDENT FIELDS ---
   department: { 
     type: String, 
     enum: ['CSE', 'EEE', 'ICT', 'ACCE', 'MATH'] 
@@ -16,7 +15,6 @@ const userSchema = new mongoose.Schema({
   session: { type: String },
   roll: { type: String },
 
-  // --- AUTHORITY FIELDS ---
   authorityType: { 
     type: String, 
     enum: [
