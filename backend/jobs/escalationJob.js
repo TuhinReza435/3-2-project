@@ -15,7 +15,9 @@ const escalationMap = {
 const runEscalationJob = () => {
   // Schedule to run every day at midnight. 
   // You can change '0 0 * * *' to '* * * * *' to run every minute for testing.
-  cron.schedule('0 0 * * *', async () => {
+  // auto matic update 2 minutes
+  // automatic update 48 hour '0 0 * * *',
+  cron.schedule('*/2 * * * *', async () => {
     console.log('[Escalation Job] Starting daily check for hanging complaints...');
     try {
       // Find all complaints not solved or rejected
@@ -29,27 +31,27 @@ const runEscalationJob = () => {
       for (let complaint of pendingComplaints) {
         // Find difference between now and last forwarded time
         const diffMs = now - Math.max(complaint.lastForwardedAt || complaint.createdAt, 0);
-        const diffHours = diffMs / (1000 * 60 * 60);
+        const diffHours = diffMs / (1000 * 60);
 
         // If holding more than 2 days (48 hours)
-        if (diffHours >= 48) {
+        if (diffHours >= 2) {
           const nextSuperior = escalationMap[complaint.currentAuthority];
 
           // If there is a superior authority in the ladder
           if (nextSuperior) {
             console.log(`[Escalation Job] Forwarding complaint ${complaint._id} from ${complaint.currentAuthority} to ${nextSuperior}`);
-            
+
             complaint.currentAuthority = nextSuperior;
             complaint.lastForwardedAt = now;
-            
+
             // Add automated log footprint
             complaint.history.push({
               action: 'forwarded',
               actionByAuthority: 'System',
-              comment: `Automatically escalated to ${nextSuperior} due to 48 hours of inactivity.`,
+              comment: `Automatically escalated to ${nextSuperior} due to 2 minutes of inactivity.`,
               timestamp: now
             });
-            
+
             await complaint.save();
             updatedCount++;
           }
