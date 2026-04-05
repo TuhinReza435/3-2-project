@@ -17,7 +17,7 @@ const runEscalationJob = () => {
   // You can change '0 0 * * *' to '* * * * *' to run every minute for testing.
   // auto matic update 2 minutes
   // automatic update 48 hour '0 0 * * *',
-  cron.schedule('*/2 * * * *', async () => {
+  cron.schedule('*/1 * * * *', async () => {
     console.log('[Escalation Job] Starting daily check for hanging complaints...');
     try {
       // Find all complaints not solved or rejected
@@ -48,7 +48,7 @@ const runEscalationJob = () => {
             complaint.history.push({
               action: 'forwarded',
               actionByAuthority: 'System',
-              comment: `Automatically escalated to ${nextSuperior} due to 2 minutes of inactivity.`,
+              comment: `Automatically escalated to ${nextSuperior} due to 3 minutes of inactivity.`,
               timestamp: now
             });
 
