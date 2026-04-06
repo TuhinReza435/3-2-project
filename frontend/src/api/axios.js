@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://campus-backend-silk.vercel.app',
+  baseURL: 'https://campus-backend-silk.vercel.app/api',
 });
 //http://localhost:5000/api
 // Attach JWT token to every request automatically
